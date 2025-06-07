@@ -1,30 +1,29 @@
 ---
-title: Getting started
-description: Guides, resources, and API references to help you build with Astro — the web framework for content-driven websites.
+title: শুরু করুন
+description: গাইড, রিসোর্স এবং API রেফারেন্স — Astro দিয়ে কনটেন্ট-কেন্দ্রিক ওয়েবসাইট তৈরি করতে সহায়তা করে এমন সবকিছু।
 i18nReady: true
 tableOfContents: false
 editUrl: false
 next: false
 banner:
   content: |
-    Astro v5 is here! <a href="/en/guides/upgrade-to/v5/">Learn how to upgrade your site</a>
+    Astro v5 চলে এসেছে! <a href="/en/guides/upgrade-to/v5/">আপনার সাইট আপগ্রেড করার পদ্ধতি জানুন</a>
 hero:
-  title: Astro Docs
-  tagline: Guides, resources, and API references to help you build with Astro.
+  title: Astro ডকস
+  tagline: Astro দিয়ে তৈরি করতে সহায়ক গাইড, রিসোর্স এবং API রেফারেন্স।
   actions:
-    - text: Install Astro
+    - text: Astro ইনস্টল করুন
       icon: rocket
       link: /en/install-and-setup/
-    - text: Learn about Astro’s features
+    - text: Astro’র ফিচার সম্পর্কে জানুন
       icon: right-arrow
       variant: minimal
       link: /en/concepts/why-astro/
   facepile:
-    tagline: Powered by Astro and our open-source contributors.
-    linkText: Join us!
+    tagline: Astro এবং আমাদের ওপেন সোর্স কন্ট্রিবিউটরদের দ্বারা নির্মিত।
+    linkText: আমাদের সঙ্গে যুক্ত হোন!
     link: /en/contribute/
 ---
-
 import { CardGrid } from '@astrojs/starlight/components'
 import Card from '~/components/Landing/Card.astro'
 import ListCard from '~/components/Landing/ListCard.astro'
@@ -32,36 +31,36 @@ import SplitCard from '~/components/Landing/SplitCard.astro'
 import Discord from '~/components/Landing/Discord.astro'
 
 <CardGrid>
-  <Card title="What will you build with Astro?" icon="laptop">
-    Explore [Astro starter themes](https://astro.build/themes/) for blogs, portfolios, docs, landing pages, SaaS, marketing, ecommerce sites, and more!
+  <Card title="Astro দিয়ে আপনি কী তৈরি করবেন?" icon="laptop">
+    ব্লগ, পোর্টফোলিও, ডকুমেন্টেশন, ল্যান্ডিং পেজ, SaaS, মার্কেটিং, ই-কমার্স সাইট এবং আরও অনেক কিছু তৈরির জন্য [Astro স্টার্টার থিমসমূহ](https://astro.build/themes/) ঘুরে দেখুন!
   </Card>
 
-  <Card title="Take a guided tour" icon="star">
-    Complete our introductory [Build a Blog Tutorial](/en/tutorial/0-introduction/) to learn the basics and create your first Astro site.
+  <Card title="একটি গাইডেড ট্যুর নিন" icon="star">
+    আমাদের পরিচিতিমূলক [ব্লগ তৈরির টিউটোরিয়াল](/en/tutorial/0-introduction/) সম্পূর্ণ করে মূল বিষয়গুলো শিখুন এবং আপনার প্রথম Astro সাইট তৈরি করুন।
   </Card>
 
-  <SplitCard title="Start a new project" icon="rocket">
+  <SplitCard title="নতুন প্রজেক্ট শুরু করুন" icon="rocket">
     ```sh
-    # create a new project with npm
+    # npm দিয়ে একটি নতুন প্রজেক্ট তৈরি করুন
     npm create astro@latest
     ```
-    
-    Our [installation guide](/en/install-and-setup/) has step-by-step instructions for installing Astro using our CLI wizard, creating a new project from an existing Astro GitHub repository, and for installing Astro manually.
+
+    আমাদের [ইনস্টলেশন গাইড](/en/install-and-setup/) আপনাকে CLI উইজার্ড ব্যবহার করে, GitHub রিপোজিটরি থেকে অথবা ম্যানুয়ালি Astro ইনস্টল করার ধাপে ধাপে নির্দেশনা দেবে।
   </SplitCard>
 
-  <ListCard title="Learn" icon="open-book">
-    - [Astro’s main features](/en/concepts/why-astro/)
-    - [Islands architecture](/en/concepts/islands/)
-    - [Astro components](/en/basics/astro-components/)
-    - [The Astro template syntax](/en/reference/astro-syntax/)
+  <ListCard title="শিখুন" icon="open-book">
+    - [Astro’র প্রধান বৈশিষ্ট্য](/en/concepts/why-astro/)
+    - [Islands আর্কিটেকচার](/en/concepts/islands/)
+    - [Astro কম্পোনেন্ট](/en/basics/astro-components/)
+    - [Astro টেমপ্লেট সিনট্যাক্স](/en/reference/astro-syntax/)
   </ListCard>
 
-  <ListCard title="Extend" icon="puzzle">
-    - [Add integrations like React and Partytown](/en/guides/integrations-guide/)
-    - [Create type safe content collections](/en/guides/content-collections/)
-    - [Enhance navigation with view transitions](/en/guides/view-transitions/)
-    - [Connect a headless CMS to your project](/en/guides/cms/)
+  <ListCard title="সম্প্রসারণ করুন" icon="puzzle">
+    - [React এবং Partytown-এর মতো ইন্টিগ্রেশন যোগ করুন](/en/guides/integrations-guide/)
+    - [টাইপ-সেইফ কনটেন্ট কালেকশন তৈরি করুন](/en/guides/content-collections/)
+    - [ভিউ ট্রানজিশন দিয়ে ন্যাভিগেশন উন্নত করুন](/en/guides/view-transitions/)
+    - [আপনার প্রজেক্টে একটি হেডলেস CMS যুক্ত করুন](/en/guides/cms/)
   </ListCard>
 </CardGrid>
 
-<Discord title="Have a question or want to get involved?" cta="Join our Discord"/>
+<Discord title="আপনার কোন প্রশ্ন আছে বা অবদান রাখতে চান?" cta="আমাদের Discord-এ যোগ দিন"/>
