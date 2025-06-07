@@ -13,6 +13,7 @@ General information about the translation process can by found in our contributi
 ## Languages
 
 - [Arabic / العربية](./العربية.md)
+- [Bnagla/ বাংলা](./বাংলা.md)
 - [German / Deutsch](./deutsch.md)
 - Spanish / Español
 - [French / Français](./français.md)
