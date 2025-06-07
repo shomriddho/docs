@@ -8,6 +8,7 @@ const allLanguages = {
 	fr: 'Français',
 	hi: 'हिन्दी',
 	ar: 'العربية',
+	bn: 'বাংলা',
 	ja: '日本語',
 	ko: '한국어',
 	pl: 'Polski',

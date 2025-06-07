@@ -1,0 +1,74 @@
+a11y.sectionLink: সেকশনের শিরোনাম
+# Site settings
+site.title: অ্যাস্ট্রো ডকুমেন্টেশন
+# Left Sidebar
+leftSidebar.sponsoredBy: স্পনসর করেছেন
+# Footer
+footer.community: কমিউনিটি
+footer.contribute: অবদান রাখুন
+footer.translatePage: এই পৃষ্ঠাটি অনুবাদ করুন
+footer.sponsor: স্পনসর করুন
+# Used in `<Since>`: Added in: v0.24.0 [NEW]
+since.addedIn: 'যোগ হয়েছে:'
+since.new: নতুন
+since.beta: বেটা
+# Installation Guide
+install.autoTab: স্বয়ংক্রিয় CLI
+install.manualTab: ম্যানুয়াল সেটআপ
+# `<DeployGuidesNav>` vocabulary
+deploy.sectionTitle: ডিপ্লয়মেন্ট নির্দেশিকা
+deploy.altSectionTitle: আরও ডিপ্লয়মেন্ট নির্দেশিকা
+deploy.ssrTag: চাহিদা অনুযায়ী
+deploy.staticTag: স্ট্যাটিক
+# CMS Guides vocabulary
+cms.navTitle: আরও CMS নির্দেশিকা
+# Media Guides vocabulary
+media.navTitle: আরও DAM নির্দেশিকা
+# Migration Guides vocabulary
+migration.navTitle: আরও মাইগ্রেশন নির্দেশিকা
+# `<RecipeLinks>` vocabulary
+recipesLink.singular: 'সম্পর্কিত রেসিপি:'
+recipesLink.plural: সম্পর্কিত রেসিপিসমূহ
+# 404 Page
+404.title: পাওয়া যায়নি
+404.content: এই পৃষ্ঠাটি আমাদের সৌরজগতের অংশ নয়।
+404.linkText: আমাকে হোমপেজে নিয়ে চলুন।
+# Integrations vocabulary
+integrations.changelog: পরিবর্তন তালিকা
+integrations.footerTitle: আরও ইন্টিগ্রেশন
+integrations.renderers: ফ্রন্টএন্ড ফ্রেমওয়ার্ক
+integrations.adapters: অ্যাডাপ্টার
+integrations.others: অন্যান্য ইন্টিগ্রেশন
+integrations.more: আরও ইন্টিগ্রেশন
+# Checklist component
+checklist.or: অথবা
+# Multiple Choice component
+multipleChoice.defaultCorrect: সঠিক!
+multipleChoice.defaultIncorrect: আবার চেষ্টা করুন!
+multipleChoice.submitLabel: জমা দিন
+# Tutorial Progress
+progress.todo: করতে হবে
+progress.done: সম্পন্ন
+# Tutorial Navigation
+tutorial.trackerLabel: টিউটোরিয়াল ট্র্যাকার
+tutorial.unit: ইউনিট
+# Tutorial
+tutorial.getReady: প্রস্তুত হোন…
+# Code snippet vocabulary
+expressiveCode.terminalWindowFallbackTitle: টার্মিনাল উইন্ডো
+expressiveCode.copyButtonTooltip: ক্লিপবোর্ডে কপি করুন
+expressiveCode.copyButtonCopied: কপি হয়েছে!
+# Backend Guides vocabulary
+backend.navTitle: আরও ব্যাকএন্ড সার্ভিস নির্দেশিকা
+# Starlight banner
+starlight.title: নিজস্ব ডকস তৈরি করতে চান?
+starlight.description: শুরু করতে এই টেমপ্লেটটি নিয়ে নিন।
+# `<StudioHeading>` component
+studioHeading.label: স্টুডিও ফিচার
+# Upgrade guide
+upgrade.implementationPR: 'ইমপ্লিমেন্টেশন PR:'
+
+# DocSearch component strings
+docsearch.button: অনুসন্ধান করুন
+docsearch.shortcutLabel: অনুসন্ধানের জন্য / চাপুন
+docsearch.placeholder: ডকুমেন্টেশন অনুসন্ধান করুন
