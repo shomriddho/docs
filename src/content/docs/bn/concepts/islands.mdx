@@ -1,109 +1,108 @@
+
 ---
-title: Islands architecture
-description: Learn about how Astro's islands architecture helps keep sites fast.
+title: আইল্যান্ড আর্কিটেকচার
+description: জানুন কিভাবে Astro-এর আইল্যান্ড আর্কিটেকচার ওয়েবসাইটগুলোকে দ্রুত রাখতে সাহায্য করে।
 i18nReady: true
 ---
 
 import IslandsDiagram from '~/components/IslandsDiagram.astro';
 import ReadMore from '~/components/ReadMore.astro';
 
-Astro helped pioneer and popularize a new frontend architecture pattern called **Islands Architecture.** Islands architecture works by rendering the majority of your page to fast, static HTML with smaller "islands" of JavaScript added when interactivity or personalization is needed on the page (an image carousel, for example). This avoids the monolithic JavaScript payloads that slow down the responsiveness of many other, modern JavaScript web frameworks.
+Astro একটি নতুন ফ্রন্টেন্ড আর্কিটেকচার প্যাটার্ন **আইল্যান্ড আর্কিটেকচার**-কে অগ্রণীভাবে প্রচার ও জনপ্রিয় করেছে। এই আর্কিটেকচারে পেজের বেশিরভাগ অংশ দ্রুত, স্ট্যাটিক HTML হিসেবে রেন্ডার করা হয়, সাথে যোগ করা হয় ছোট ছোট জাভাস্ক্রিপ্ট "আইল্যান্ড" যখন পেজে ইন্টারঅ্যাক্টিভিটি বা পার্সোনালাইজেশনের প্রয়োজন হয় (যেমন একটি ইমেজ ক্যারousel)। এটি ঐতিহ্যবাহী মনোলিথিক জাভাস্ক্রিপ্ট পেলোড এড়িয়ে চলে যা অন্যান্য আধুনিক জাভাস্ক্রিপ্ট ওয়েব ফ্রেমওয়ার্কগুলোর রেসপন্সিভনেস কমিয়ে দেয়।
 
-## A brief history
+## সংক্ষিপ্ত ইতিহাস
 
-The term "component island" was first coined by Etsy's frontend architect [Katie Sylor-Miller](https://sylormiller.com/) in 2019. This idea was then expanded on and documented in [this post](https://jasonformat.com/islands-architecture/) by Preact creator Jason Miller on August 11, 2020.
+"কম্পোনেন্ট আইল্যান্ড" শব্দটি প্রথম ব্যবহার করেন Etsy-এর ফ্রন্টেন্ড আর্কিটেক্ট [কেটি সাইলর-মিলার](https://sylormiller.com/) ২০১৯ সালে। এই ধারণাটি পরে Preact-এর স্রষ্টা জেসন মিলার [এই ব্লগ পোস্টে](https://jasonformat.com/islands-architecture/) ২০২০ সালের ১১ই আগস্ট বিস্তারিতভাবে ব্যাখ্যা করেন।
 
-> The general idea of an "Islands" architecture is deceptively simple: render HTML pages on the server, and inject placeholders or slots around highly dynamic regions [...] that can then be "hydrated" on the client into small self-contained widgets, reusing their server-rendered initial HTML.  
-> — Jason Miller, Creator of Preact
+> "আইল্যান্ডস" আর্কিটেকচারের সাধারণ ধারণা সহজ: সার্ভারে HTML পেজ রেন্ডার করুন এবং অত্যন্ত ডাইনামিক রিজিয়নের চারপাশে প্লেসহোল্ডার বা স্লট ইনজেক্ট করুন [...] যেগুলো পরে ক্লায়েন্টে "হাইড্রেট" করে ছোট স্বয়ংসম্পূর্ণ উইজেটে পরিণত করা যায়, তাদের সার্ভার-রেন্ডার্ড প্রাথমিক HTML পুনরায় ব্যবহার করে।  
+> — জেসন মিলার, Preact-এর স্রষ্টা
 
-The technique that this architectural pattern builds on is also known as **partial** or **selective hydration.**
+এই আর্কিটেকচারাল প্যাটার্ন যে টেকনিকের উপর ভিত্তি করে তৈরি তা **আংশিক** বা **নির্বাচনী হাইড্রেশন** নামেও পরিচিত।
 
-In contrast, most JavaScript-based web frameworks hydrate & render an entire website as one large JavaScript application (also known as a single-page application, or SPA). SPAs provide simplicity and power but suffer from page-load performance problems due to heavy client-side JavaScript usage.
+অন্যদিকে, বেশিরভাগ জাভাস্ক্রিপ্ট-ভিত্তিক ওয়েব ফ্রেমওয়ার্ক একটি সম্পূর্ণ ওয়েবসাইটকে একটি বড় জাভাস্ক্রিপ্ট অ্যাপ্লিকেশন হিসেবে হাইড্রেট ও রেন্ডার করে (যাকে সিঙ্গেল-পেজ অ্যাপ্লিকেশন বা SPA বলা হয়)। SPA গুলো সরলতা এবং শক্তি প্রদান করে কিন্তু ভারী ক্লায়েন্ট-সাইড জাভাস্ক্রিপ্ট ব্যবহারের কারণে পেজ-লোড পারফরম্যান্স সমস্যায় ভোগে।
 
-SPAs have their place, even [embedded inside an Astro page](/en/guides/migrate-to-astro/from-create-react-app/). But, SPAs lack the native ability to selectively and strategically hydrate, making them a heavy-handed choice for most projects on the web today.
+SPA-এর নিজস্ব স্থান আছে, এমনকি [একটি Astro পেজের ভিতর এম্বেড করেও](/bn/guides/migrate-to-astro/from-create-react-app/)। কিন্তু, SPA গুলোতে নির্বাচনী ও কৌশলগতভাবে হাইড্রেট করার নেটিভ ক্ষমতা নেই, যা বর্তমান ওয়েবের বেশিরভাগ প্রজেক্টের জন্য এগুলোকে ভারী পছন্দে পরিণত করে।
 
-Astro became popular as the first mainstream JavaScript web framework with selective hydration built-in, using that same component islands pattern first coined by Sylor-Miller. We've since expanded and evolved on Sylor-Miller's original work, which helped to inspire a similar component island approach to dynamically server-rendered content.
+Astro নির্বাচনী হাইড্রেশন বিল্ট-ইন সহ প্রথম মেইনস্ট্রিম জাভাস্ক্রিপ্ট ওয়েব ফ্রেমওয়ার্ক হিসেবে জনপ্রিয় হয়েছে, সাইলর-মিলার দ্বারা প্রথম উদ্ভাবিত সেই একই কম্পোনেন্ট আইল্যান্ড প্যাটার্ন ব্যবহার করে। আমরা সাইলর-মিলারের মূল কাজকে প্রসারিত ও উন্নত করেছি, যা ডাইনামিকভাবে সার্ভার-রেন্ডার্ড কন্টেন্টের জন্য অনুরূপ কম্পোনেন্ট আইল্যান্ড অ্যাপ্রোচকে অনুপ্রাণিত করতে সাহায্য করেছে।
 
-## What is an island?
+## একটি আইল্যান্ড কি?
 
-In Astro, an island is an enhanced UI component on an otherwise static page of HTML.
+Astro-তে, একটি আইল্যান্ড হল একটি স্ট্যাটিক HTML পেজের উপর একটি উন্নত UI কম্পোনেন্ট।
 
-A [**client island**](#client-islands) is an interactive JavaScript UI component that is hydrated separately from the rest of the page, while a [**server island**](#server-islands) is a UI component that server-renders its dynamic content separately from the rest of the page.
+একটি [**ক্লায়েন্ট আইল্যান্ড**](#client-islands) হল একটি ইন্টারঅ্যাক্টিভ জাভাস্ক্রিপ্ট UI কম্পোনেন্ট যা পেজের বাকি অংশ থেকে আলাদাভাবে হাইড্রেট করা হয়, যখন একটি [**সার্ভার আইল্যান্ড**](#server-islands) হল একটি UI কম্পোনেন্ট যা তার ডাইনামিক কন্টেন্ট পেজের বাকি অংশ থেকে আলাদাভাবে সার্ভার-রেন্ডার করে।
 
-Both islands run expensive or slower processes independently, on a per-component basis, for optimized page loads.
+উভয় আইল্যান্ড ব্যয়বহুল বা ধীর প্রসেস গুলো স্বাধীনভাবে, প্রতি-কম্পোনেন্ট ভিত্তিতে চালায়, অপ্টিমাইজড পেজ লোডের জন্য।
 
-## Island components
+## আইল্যান্ড কম্পোনেন্ট
 
-Astro components are the building blocks of your page template. They render to static HTML with no client-side runtime.
+Astro কম্পোনেন্টগুলো আপনার পেজ টেমপ্লেটের বিল্ডিং ব্লক। এগুলো কোনো ক্লায়েন্ট-সাইড রানটাইম ছাড়াই স্ট্যাটিক HTML-এ রেন্ডার হয়।
 
-Think of a client island as an interactive widget floating in a sea of otherwise static, lightweight, server-rendered HTML. Server islands can be added for personalized or dynamic server-rendered elements, such as a logged in visitor's profile picture.
+একটি ক্লায়েন্ট আইল্যান্ডকে স্ট্যাটিক, লাইটওয়েট, সার্ভার-রেন্ডার্ড HTML-এর সাগরে ভাসমান একটি ইন্টারঅ্যাক্টিভ উইজেট হিসেবে ভাবুন। সার্ভার আইল্যান্ড যোগ করা যায় পার্সোনালাইজড বা ডাইনামিক সার্ভার-রেন্ডার্ড এলিমেন্টের জন্য, যেমন একজন লগ ইন করা ভিজিটরের প্রোফাইল পিকচার।
 
 <IslandsDiagram>
-  <Fragment slot="headerApp">Header (interactive island)</Fragment>
-  <Fragment slot="sidebarApp">Sidebar (static HTML)</Fragment>
+  <Fragment slot="headerApp">হেডার (ইন্টারঅ্যাক্টিভ আইল্যান্ড)</Fragment>
+  <Fragment slot="sidebarApp">সাইডবার (স্ট্যাটিক HTML)</Fragment>
   <Fragment slot="main">
-    Static content like text, images, etc.
+    টেক্সট, ইমেজ ইত্যাদির মতো স্ট্যাটিক কন্টেন্ট
   </Fragment>
-  <Fragment slot="carouselApp">Image carousel (interactive island)</Fragment>
-  <Fragment slot="footer">Footer (static HTML)</Fragment>
-  <Fragment slot="source">Source: [Islands Architecture: Jason Miller](https://jasonformat.com/islands-architecture/)</Fragment>
+  <Fragment slot="carouselApp">ইমেজ ক্যারousel (ইন্টারঅ্যাক্টিভ আইল্যান্ড)</Fragment>
+  <Fragment slot="footer">ফুটার (স্ট্যাটিক HTML)</Fragment>
+  <Fragment slot="source">সোর্স: [আইল্যান্ড আর্কিটেকচার: জেসন মিলার](https://jasonformat.com/islands-architecture/)</Fragment>
 </IslandsDiagram>
 
-An island always runs in isolation from other islands on the page, and multiple islands can exist on a page. Client islands can still share state and communicate with each other, even though they run in different component contexts.
+একটি আইল্যান্ড সবসময় পেজের অন্যান্য আইল্যান্ড থেকে বিচ্ছিন্নভাবে চলে, এবং একটি পেজে একাধিক আইল্যান্ড থাকতে পারে। ক্লায়েন্ট আইল্যান্ডগুলো এখনও স্টেট শেয়ার করতে এবং একে অপরের সাথে কমিউনিকেট করতে পারে, যদিও তারা ভিন্ন কম্পোনেন্ট কন্টেক্সটে চলে।
 
-This flexibility allows Astro to support multiple UI frameworks like [React](https://react.dev/), [Preact](https://preactjs.com/), [Svelte](https://svelte.dev/), [Vue](https://vuejs.org/), and [SolidJS](https://www.solidjs.com/). Because they are independent, you can even mix several frameworks on each page.
+এই ফ্লেক্সিবিলিটি Astro-কে [React](https://react.dev/), [Preact](https://preactjs.com/), [Svelte](https://svelte.dev/), [Vue](https://vuejs.org/), এবং [SolidJS](https://www.solidjs.com/)-এর মতো একাধিক UI ফ্রেমওয়ার্ক সাপোর্ট করতে দেয়। কারণ তারা স্বাধীন, আপনি প্রতিটি পেজে একাধিক ফ্রেমওয়ার্ক মিক্সও করতে পারেন।
 
 :::tip
-Although most developers will stick to just one UI framework, Astro supports multiple frameworks in the same project. This allows you to:
+যদিও বেশিরভাগ ডেভেলপার শুধুমাত্র একটি UI ফ্রেমওয়ার্ক ব্যবহার করবে, Astro একই প্রজেক্টে একাধিক ফ্রেমওয়ার্ক সাপোর্ট করে। এটি আপনাকে অনুমতি দেয়:
 
-- Choose the framework that is best for each component.
-- Learn a new framework without needing to start a new project.
-- Collaborate with others even when working in different frameworks.
-- Incrementally convert an existing site to another framework with no downtime.
+- প্রতিটি কম্পোনেন্টের জন্য সেরা ফ্রেমওয়ার্ক বেছে নিতে
+- নতুন প্রজেক্ট শুরু না করেই নতুন ফ্রেমওয়ার্ক শিখতে
+- ভিন্ন ফ্রেমওয়ার্কে কাজ করার সময়ও অন্যদের সাথে সহযোগিতা করতে
+- কোনো ডাউনটাইম ছাড়াই বিদ্যমান সাইটকে ধাপে ধাপে অন্য ফ্রেমওয়ার্কে কনভার্ট করতে
 :::
 
-## Client Islands
+## ক্লায়েন্ট আইল্যান্ডস
 
-By default, Astro will automatically render every UI component to just HTML & CSS, **stripping out all client-side JavaScript automatically.** 
-
+ডিফল্ট হিসেবে, Astro স্বয়ংক্রিয়ভাবে প্রতিটি UI কম্পোনেন্টকে শুধুমাত্র HTML & CSS এ রেন্ডার করে, **সকল ক্লায়েন্ট-সাইড JavaScript স্বয়ংক্রিয়ভাবে বাদ দেয়।**
 
 ```astro title="src/pages/index.astro"
 <MyReactComponent />
 ```
 
-This may sound strict, but this behavior is what keeps Astro websites fast by default and protects developers from accidentally sending unnecessary or unwanted JavaScript that might slow down their website.
+এটি কঠোর শোনাতে পারে, কিন্তু এই আচরণটাই Astro ওয়েবসাইটগুলোকে ডিফল্টভাবেই দ্রুত রাখে এবং ডেভেলপারদের অপ্রয়োজনীয় বা অনিচ্ছাকৃত JavaScript পাঠানোর কারণে সাইট স্লো হওয়া থেকে রক্ষা করে।
 
-Turning any static UI component into an interactive island requires only a `client:*` directive. Astro then automatically builds and bundles your client-side JavaScript for optimized performance.
+যেকোনো স্ট্যাটিক UI কম্পোনেন্টকে ইন্টারেক্টিভ আইল্যান্ডে রূপান্তর করতে হলে শুধু একটি client:* ডিরেক্টিভ লাগবে। এরপর Astro স্বয়ংক্রিয়ভাবে আপনার ক্লায়েন্ট-সাইড JavaScript বান্ডেল ও অপ্টিমাইজ করে তৈরি করে।
 
 ```astro title="src/pages/index.astro" ins="client:load"
 <!-- This component is now interactive on the page! 
      The rest of your website remains static. -->
 <MyReactComponent client:load />
 ```
+আইল্যান্ডসের মাধ্যমে, ক্লায়েন্ট-সাইড JavaScript শুধু সেই স্পেসিফিক ইন্টারেক্টিভ কম্পোনেন্টগুলোর জন্য লোড হয় যেগুলো আপনি client:* ডিরেক্টিভ দিয়ে মার্ক করেছেন।
 
-With islands, client-side JavaScript is only loaded for the explicit interactive components that you mark using `client:*` directives.
+আর যেহেতু ইন্টারঅ্যাকশন কম্পোনেন্ট-লেভেলে কনফিগার করা হয়, তাই প্রতিটি কম্পোনেন্টের ব্যবহার অনুযায়ী আলাদা লোডিং প্রায়োরিটি সেট করা যায়। উদাহরণস্বরূপ, client:idle বলে একটি কম্পোনেন্ট ব্রাউজার যখন idle হবে তখন লোড হবে, আর client:visible বলে কম্পোনেন্ট তখনই লোড হবে যখন তা ভিউপোর্টে আসবে।
 
-And because interaction is configured at the component-level, you can handle different loading priorities for each component based on its usage. For example, `client:idle` tells a component to load when the browser becomes idle, and `client:visible` tells a component to load only once it enters the viewport.
+<h3>ক্লায়েন্ট আইল্যান্ডস এর সুবিধা</h3>
 
-<h3>Benefits of client islands</h3>
+Astro Islands দিয়ে তৈরি করার সবচেয়ে স্পষ্ট সুবিধা হলো পারফরম্যান্স: আপনার সাইটের বেশিরভাগ অংশ দ্রুত, স্ট্যাটিক HTML এ রূপান্তরিত হয় এবং JavaScript শুধুমাত্র প্রয়োজনীয় কম্পোনেন্টের জন্যই লোড হয়। JavaScript প্রতি বাইটে লোড করায় সবচেয়ে ধীর অ্যাসেটগুলোর একটি, তাই প্রতিটি বাইটের গুরুত্ব অনেক বেশি।
 
-The most obvious benefit of building with Astro Islands is performance: the majority of your website is converted to fast, static HTML and JavaScript is only loaded for the individual components that need it. JavaScript is one of the slowest assets that you can load per-byte, so every byte counts.
+আরেকটি সুবিধা হলো প্যারালাল লোডিং। উপরের উদাহরণে, কম প্রায়োরিটির "image carousel" আইল্যান্ডকে উচ্চ প্রায়োরিটির "header" আইল্যান্ড ব্লক করতে হয় না। দুটোই প্যারালাল লোড হয় এবং আলাদাভাবে হাইড্রেট হয়, যার ফলে হেডার ইন্টারেক্টিভ হয় তাত্ক্ষণিকভাবে, ভারি ক্যারোসেল লোড হতে অপেক্ষা না করেই।
 
-Another benefit is parallel loading. In the example illustration above, the low-priority "image carousel" island doesn't need to block the high-priority "header" island. The two load in parallel and hydrate in isolation, meaning that the header becomes interactive immediately without having to wait for the heavier carousel lower down the page.
+আরও ভালো কথা হলো, আপনি Astro কে স্পষ্টভাবে বলতে পারেন কোন কম্পোনেন্ট কিভাবে এবং কখন রেন্ডার করতে হবে। যদি সেই ইমেজ ক্যারোসেলটি লোড করতে অনেক সময় নেয়, আপনি একটি স্পেশাল client directive ব্যবহার করে বলুন, যাতে ক্যারোসেল শুধু তখনই লোড হয় যখন তা পেজে দৃশ্যমান হয়। ব্যবহারকারী যদি কখনো তা না দেখে, তা লোডই হবে না।
 
-Even better, you can tell Astro exactly how and when to render each component. If that image carousel is really expensive to load, you can attach a special [client directive](/en/reference/directives-reference/#client-directives) that tells Astro to only load the carousel when it becomes visible on the page. If the user never sees it, it never loads.
+Astro তে, ডেভেলপার হিসেবে আপনার কাজ হচ্ছে স্পষ্টভাবে বলতে কোন কোন কম্পোনেন্ট ব্রাউজারে রান করবে। Astro ঠিকমতো শুধু প্রয়োজনীয় অংশগুলো হাইড্রেট করবে আর বাকি সাইট থাকবে স্ট্যাটিক HTML হিসেবে।
 
-In Astro, it’s up to you as the developer to explicitly tell Astro which components on the page need to also run in the browser. Astro will only hydrate exactly what’s needed on the page and leave the rest of your site as static HTML. 
+**ক্লায়েন্ট আইল্যান্ডস হলো Astro এর ডিফল্ট দ্রুত পারফরম্যান্সের গোপন রহস্য!**
 
-**Client islands are the secret to Astro’s fast-by-default performance story!**
+<ReadMore>আপনার প্রজেক্টে JavaScript ফ্রেমওয়ার্ক কম্পোনেন্ট ব্যবহার সম্পর্কে আরও পড়ুন।</ReadMore>
 
-<ReadMore>Read more about [using JavaScript framework components](/en/guides/framework-components/) in your project.</ReadMore>
+## সার্ভার আইল্যান্ডস
 
-## Server islands
+সার্ভার আইল্যান্ডস হলো একটি কৌশল যা ধীরগতির বা ব্যয়বহুল সার্ভার-সাইড কোডকে মূল রেন্ডারিং প্রক্রিয়া থেকে সরিয়ে দেয়। এটি উচ্চ-দ্রুততার স্ট্যাটিক HTML এবং ডায়নামিক সার্ভার-জেনারেটেড কম্পোনেন্ট একত্রে ব্যবহার করা সহজ করে তোলে।
 
-Server islands are a way to move expensive or slow server-side code out of the way of the main rendering process, making it easy to combine high-performance static HTML and dynamic server-generated components.
-
-Add the [`server:defer` directive](/en/reference/directives-reference/#server-directives) to any Astro component on your page to turn it into its own server island:
+আপনার পেজে যেকোনো Astro কম্পোনেন্টে [`server:defer` ডিরেক্টিভ](/bn/reference/directives-reference/#server-directives) যোগ করুন, এটি সেই কম্পোনেন্টকে একটি স্বতন্ত্র সার্ভার আইল্যান্ডে রূপান্তর করবে:
 
 ```astro title="src/pages/index.astro" "server:defer"
 ---
@@ -111,25 +110,26 @@ import Avatar from "../components/Avatar.astro";
 ---
 <Avatar server:defer />
 ```
+এটি আপনার পেজকে ছোট ছোট সার্ভার-রেন্ডারড কনটেন্ট এলাকায় ভাগ করে দেয়, যেগুলো একসাথে প্যারালালি লোড হয়।
 
-This breaks up your page with smaller areas of server-rendered content that each load in parallel.
+আপনার পেজের মূল কনটেন্ট অবিলম্বে রেন্ডার হতে পারে প্লেসহোল্ডার কনটেন্টসহ, যেমন একটি সাধারণ অ্যাভাটার, যতক্ষণ না আপনার আইল্যান্ডের নিজস্ব কনটেন্ট রেন্ডার হয়। সার্ভার আইল্যান্ডস ব্যবহারে, কিছু ব্যক্তিগতকৃত কনটেন্ট থাকলেও আপনার পেজের বাকি অংশ রেন্ডার হতে দেরি হয় না।
 
-Your page's main content can be rendered immediately with placeholder content, such as a generic avatar until your island's own content is available. With server islands, having small components of personalized content does not delay the rendering of an otherwise static page.
+এই রেন্ডারিং প্যাটার্নটি পোর্টেবলভাবে ডিজাইন করা হয়েছে। এটি কোনো নির্দিষ্ট সার্ভার ইন্সট্রাকচার উপর নির্ভর করে না, তাই এটি Node.js সার্ভার, Docker কনটেইনার, অথবা যেকোনো সার্ভারলেস প্রোভাইডারের সাথেই কাজ করে।
 
-This rendering pattern was built to be portable. It does not depend on any server infrastructure so it will work with any host, from a Node.js server in a Docker container to the serverless provider of your choice.
 
-<h3>Benefits of server islands</h3>
+<h3>সার্ভার আইল্যান্ডসের উপকারিতা</h3>
 
-One benefit of server islands is the ability to render the more highly dynamic parts of your page on the fly. This allows the outer shell and main content to be more aggressively cached, providing faster performance.
+সার্ভার আইল্যান্ডসের একটি উপকারিতা হলো আপনার পেজের খুব ডায়নামিক অংশগুলো রিয়েল-টাইমে রেন্ডার করার ক্ষমতা। এটি বাইরের শেল এবং মূল কনটেন্টকে আরও বেশি আক্রমণাত্মকভাবে ক্যাশ করার সুযোগ দেয়, ফলে পারফরম্যান্স বাড়ে।
 
-Another benefit is providing a great visitor experience. Server islands are optimized and load quickly, often even before the browser has even painted the page. But in the short time it takes for your islands to render, you can display custom fallback content and prevent any layout shift.
+আরেকটি উপকারিতা হলো উন্নত ভিজিটর এক্সপেরিয়েন্স। সার্ভার আইল্যান্ডস অপ্টিমাইজড এবং দ্রুত লোড হয়, অনেক সময় ব্রাউজার পেইন্ট করার আগেই। কিন্তু যতটুকু সময়ে আইল্যান্ড রেন্ডার হয়, আপনি সেখানে কাস্টম ফলব্যাক কনটেন্ট দেখাতে পারেন এবং লেআউট শিফট এড়াতে পারেন।
 
-An example of a site that benefits from Astro's server islands is an e-commerce storefront. Although the main content of product pages change infrequently, these pages typically have some dynamic pieces:
+একটি উদাহরণ যেখানে Astro-র সার্ভার আইল্যান্ডস কার্যকর — একটি ই-কমার্স স্টোরফ্রন্ট। যদিও প্রোডাক্ট পেজগুলোর মূল কনটেন্ট খুব ঘন ঘন পরিবর্তিত হয় না, তবুও সেখানে কিছু ডায়নামিক উপাদান থাকে যেমন:
 
-- The user's avatar in the header.
-- Special deals and sales for the product.
-- User reviews.
+- হেডারে ইউজারের অ্যাভাটার
 
-Using server islands for these elements, your visitor will see the most important part of the page, your product, immediately. Generic avatars, loading spinners, and store announcements can be displayed as fallback content until the personalized parts are available.
+- পণ্যের জন্য বিশেষ ডিল ও সেল অফার
 
-<ReadMore>Read more about [using server islands](/en/guides/server-islands/) in your project.</ReadMore>
+- ইউজার রিভিউ
+
+এই উপাদানগুলোর জন্য সার্ভার আইল্যান্ডস ব্যবহার করে, আপনার ভিজিটর প্রথমেই পেজের সবচেয়ে গুরুত্বপূর্ণ অংশ — প্রোডাক্টটি — দেখতে পায়। সাধারণ অ্যাভাটার, লোডিং স্পিনার, বা স্টোর ঘোষণাগুলো ফলব্যাক কনটেন্ট হিসেবে দেখানো যায় যতক্ষণ না ব্যক্তিগতকৃত কনটেন্ট উপলভ্য হয়।
+<ReadMore>আপনার প্রোজেক্টে [সার্ভার আইল্যান্ডস ব্যবহারের](/bn/guides/server-islands/) সম্পর্কে আরও জানুন।</ReadMore>
